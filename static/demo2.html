@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="btn">click me to pub</button>
+    <script>
+      const query = new URLSearchParams(location.search);
+      const id = query.get("id");
+
+      document.querySelector("#btn").addEventListener("click", doPub);
+
+      function doPub() {
+        if (!id) {
+          return alert("id is required");
+        }
+        fetch("/pub/" + id, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            timeStamp: Date.now(),
+          }),
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            console.log("事件发布: ", res);
+          });
+      }
+    </script>
+  </body>
+</html>

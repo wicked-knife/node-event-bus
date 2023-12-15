@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="btn">断开连接</button>
+
+    <iframe id="my-frame"></iframe>
+
+    <div id="playground">
+
+    </div>
+    <script>
+      const iframe = document.getElementById("my-frame");
+      const playground = document.getElementById('playground')
+      // 创建一个新的EventSource对象，连接到服务器发送事件的端点
+      const eventSource = new EventSource("/sub");
+
+      // 监听来自服务器的事件消息
+      eventSource.onmessage = function (event) {
+        const eventData = JSON.parse(event.data);
+        console.log("接收到的数据:", eventData);
+
+        if(eventData && eventData.event === 'Init' && eventData.id) {
+          iframe.src = `/demo2.html?id=${eventData.id}`
+        }
+        if(eventData.event === 'Pub') {
+          playground.innerText = JSON.stringify(eventData.data)
+        }
+      };
+
+      // 监听连接错误
+      eventSource.onerror = function (error) {
+        console.error("连接错误:", error);
+        eventSource.close()
+      };
+
+      document.querySelector("#btn").addEventListener("click", shutdown);
+
+      function shutdown() {
+        eventSource.close()
+      }
+    </script>
+  </body>
+</html>
