@@ -22,12 +22,13 @@
       // 监听来自服务器的事件消息
       eventSource.onmessage = function (event) {
         const eventData = JSON.parse(event.data);
-        console.log("接收到的数据:", eventData);
 
         if(eventData && eventData.event === 'Init' && eventData.id) {
+          console.log("event bus初始化成功: ", eventData);
           iframe.src = `/demo2.html?id=${eventData.id}`
         }
         if(eventData.event === 'Pub') {
+          console.log("event bus接收到数据:", eventData);
           playground.innerText = JSON.stringify(eventData.data)
         }
       };
