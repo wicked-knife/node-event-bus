@@ -7,6 +7,7 @@ const router = express.Router();
 const eventBusMap = new Map();
 
 router.get('/', function(req, res) {
+	console.log(req.ip);
 	const markdown = fs.readFileSync('./README.md', 'utf-8');
 	const html = markdownRenderer.render(markdown);
 	res.send(html);

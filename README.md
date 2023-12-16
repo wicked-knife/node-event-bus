@@ -85,6 +85,8 @@ npm run start
 ```
 
 ### 2. 打开浏览器
+
+#### 2.1 单向通信
 ```
-http://localhost:3000/demo.html
+http://localhost:3000/demo1/parent.html
 ```
