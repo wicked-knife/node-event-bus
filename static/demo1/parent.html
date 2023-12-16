@@ -25,7 +25,7 @@
 
         if(eventData && eventData.event === 'Init' && eventData.id) {
           console.log("event bus初始化成功: ", eventData);
-          iframe.src = `/demo2.html?id=${eventData.id}`
+          iframe.src = `/demo1/child.html?id=${eventData.id}`
         }
         if(eventData.event === 'Pub') {
           console.log("event bus接收到数据:", eventData);

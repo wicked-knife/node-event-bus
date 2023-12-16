@@ -1,8 +1,16 @@
 const express = require('express');
 const EventEmitter = require('node:events');
+const markdownRenderer = require('markdown-it')();
+const fs = require('node:fs');
 const { v4: uuidv4 } = require('uuid');
 const router = express.Router();
 const eventBusMap = new Map();
+
+router.get('/', function(req, res) {
+	const markdown = fs.readFileSync('./README.md', 'utf-8');
+	const html = markdownRenderer.render(markdown);
+	res.send(html);
+});
 
 router.get('/ping', function(req, res) {
 	res.send('pong');
